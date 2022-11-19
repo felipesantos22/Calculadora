@@ -1,0 +1,7 @@
+.btn{
+    font-size: 1.4em;
+    background-color: aliceblue;
+    border: none;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
