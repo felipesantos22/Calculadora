@@ -3,9 +3,13 @@ import './Button.css'
 
 class Button extends Component {
     render() {
-        const { label } = this.props
+        const { label, click, triple, double, operation } = this.props
         return (
-            <button className='btn'>{label}</button>
+            <button className={`btn 
+            ${operation ? 'operation' : ''}  
+            ${double ? 'double' : ''} 
+            ${triple ? "triple" : ''}`}
+                onClick={e => click(e.target.innerHTML)}>{label}</button>
         )
     }
 }
