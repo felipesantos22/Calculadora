@@ -3,7 +3,19 @@ import Button from './Button';
 import './Calculator.css'
 import Display from './Display';
 
+const initialState = {
+    displayValue:'0',
+    clearDisplay:false,
+    operation:null,
+    values:[0,0],
+    current:0
+}
+
 class Calculator extends Component {
+
+    state ={
+        ...initialState
+    }
 
     constructor(props) {
         super(props)
@@ -13,6 +25,7 @@ class Calculator extends Component {
     }
 
     clearMemory() {
+        this.setState({...initialState})
         console.log("Clear")
     }
 
@@ -27,7 +40,7 @@ class Calculator extends Component {
     render() {
         return (
             <div className='calculator'>
-                <Display value={100} />
+                <Display value={this.state.displayValue} />
                 <Button label="AC" click={this.clearMemory} triple />
                 <Button label="/" click={this.setOperation} operation />
                 <Button label="7" click={this.addDigit} />
