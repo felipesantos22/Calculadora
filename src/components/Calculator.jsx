@@ -12,7 +12,7 @@ const initialState = {
 }
 
 class Calculator extends Component {
-  
+
     constructor(props) {
         super(props)
         this.clearMemory = this.clearMemory.bind(this)
@@ -30,8 +30,27 @@ class Calculator extends Component {
         console.log("Clear")
     }
 
-    setOperation(operation) {        
-        console.log(operation)
+    setOperation(operation) {
+        if (this.state.current === 0) {
+            this.setState({ operation, current: 1, clearDisplay: true })
+        }else{
+            const equals = operation === ''
+            const currentOperation = this.state.operation
+            const values = [...this.state.values]
+            try{
+                values[0] = eval(`${values[0]} ${currentOperation} ${values[1]}`)
+            }catch(e){
+                values[0] = this.state.values[0]
+            }           
+            values[1] = 0
+            this.setState({
+                displayValue: values[0],
+                operation: equals ? null : operation,
+                current: equals ? 0 : 1,
+                clearDisplay: !equals,
+                values
+            })
+        }
     }
 
     addDigit(n) {
@@ -42,11 +61,11 @@ class Calculator extends Component {
         const currentValue = clearDisplay ? '' : this.state.displayValue;
         const newDisplayValue = currentValue + n
         this.setState({ displayValue: newDisplayValue, clearDisplay: false })
-        if(n !== '.'){
-          const i = this.state.current;
-          const newValue = parseFloat(newDisplayValue);
-          const values = [...this.state.values];
-          values[i] = newValue
+        if (n !== '.') {
+            const i = this.state.current;
+            const newValue = parseFloat(newDisplayValue);
+            const values = [...this.state.values];
+            values[i] = newValue
         }
     }
 
